@@ -16,19 +16,19 @@ knit        : slidify::knit2slides
 # Developing Data Products
 ---------------------
 
-## Course Project: [Plot using Plotly](https://vasupradkanade.github.io/DevelopingDataProducts_W3/UsingPlotly.html)
+## Course Project: [Slidyfy App and Presentation](https://vasupradkanade.github.io/DevelopingDataProducts_W3/UsingPlotly.html)
 
 Coursera Data Science Specialization
 
-<small> [Vasuprad Kanade](github.com/VasupradKanade) / [LinkedIn](https://www.linkedin.com/in/vasuprad) </small>
+<small> [Vasuprad Kanade](https://github.com/VasupradKanade) / [LinkedIn](https://www.linkedin.com/in/vasuprad) </small>
 
 <center>
-_"Turn sales information into insight through the magic of Shiny"_
+_"Plot IRIS flower data using ShinyApp and Slidify Presentation"_
 </center>
 
 
 ---
-## The Assignment 
+# The Assignment 
 
 The goal of this assignment is to build:
 
@@ -38,70 +38,37 @@ The goal of this assignment is to build:
 
 ### Links to Project App & Docs
 
-1. Shiny App: [Link](https://vasupradkanade.shinyapps.io/Wk4ShinyApp/)
+1. Shiny App: [Link](https://vasupradkanade.shinyapps.io/ShinyAppIris/)
 
 2. `server.R` and `ui.R` files: [Link](https://github.com/VasupradKanade/ShinyApp) 
 
----  
-## The Sales Analytics Dashboard
+---
+# The Data
 
-#### Make Selections to Unlock Insights
-
-There's a lot you can do with the __Sales Analytics Dashboard__. Here's a few suggestion to get started:
-
-* Imagine you are an executive at _Cannondale_ in charge of strategy and business development. Your goal is to understand which products _Cannondale's_ customers are purchasing, which customers are purchasing the most, and what the organization can do to improve sales.
-
-* Use the __Reactive Inputs__ to filter by year, product unit price, product primary category, and product secondary category. 
-
-* On the __Analysis__ tab, see how the filters can be used to drill into the information. See if there are any insights that you can come up with from the data.
-
-* Switch to the __Data__ tab to see how the filters control the data. Subset the data, and try downloading the csv file. 
-
-* Use the __Reset Fields__ button when finished. See how the data set refreshs to its original size and how all of the reactive inputs reset.
-
---- 
-## Code Example
-
-#### Leaflet: Visualize Customers By Location
+The Iris flower data set or Fisher's Iris data set is a multivariate data set introduced by the British statistician and biologist *Ronald Fisher* in his 1936 paper The use of multiple measurements in taxonomic problems as an example of linear discriminant analysis
 
 
+The data set consists of 50 samples from each of three species of *__Iris__ (Iris setosa, Iris virginica and Iris versicolor)*. Four features were measured from each sample: the length and the width of the sepals and petals, in centimetres. Based on the combination of these four features, Fisher developed a linear discriminant model to distinguish the species from each other.
+
+---
+# Code Example
+#### Plot IRIS flower data using Plotly
+This segment of code selects the relevant data columns, aggregates the three speciees of Iris flower by petal and sepal length.
 
 ```r
-library(leaflet)
-library(htmlwidgets)
-library(knitr)
-library(dplyr)
+filename <- "iris.csv"
 
-# Load data
-source("helper.R")
-orders.extended <- read.data()
+# Load the CSV file from the local directory
+dataset <- read.csv(filename, header=FALSE)
 
-# Get sales by location
-salesByLocation <- orders.extended %>%
-        group_by(bikeshop.name, longitude, latitude) %>%
-        summarise(total.sales = sum(price.extended)) %>%
-        mutate(popup = paste0(bikeshop.name, 
-                              ": ", 
-                              scales::dollar(total.sales)))
-
-# Use Leaflet package to create map visualizing sales by customer location
-l <- leaflet(salesByLocation) %>% 
-  addProviderTiles("CartoDB.Positron") %>%
-  addMarkers(lng = ~longitude, 
-             lat = ~latitude,
-             popup = ~popup) %>%
-  addCircles(lng = ~longitude, 
-             lat = ~latitude, 
-             weight = 2,
-             radius = ~(total.sales)^0.775)
-
-# Move to img folder
-setwd("./assets/img")
-saveWidget(l, 'leaflet1.html') # Save widget html
-setwd("../..")
-
-# Source saved file
-cat('<pre><iframe src="./assets/img/leaflet1.html" width=100% height=350px allowtransparency="true"> </iframe></pre>')
+# Set the column names in the dataset
+colnames(dataset) <- c("Sepal.Length","Sepal.Width","Petal.Length","Petal.Width","Species")
 ```
 
-<pre><iframe src="./assets/img/leaflet1.html" width=100% height=350px allowtransparency="true"> </iframe></pre>
+---
+# Plot using Plotly
+Using ColorBrewer Palette Names
+
+
+<pre><iframe src="./assets/img/plot1.html" width=750px height=400px allowtransparency="true" scrolling="no" seamless="seamless" frameBorder="0"> </iframe></pre>
+

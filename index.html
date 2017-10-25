@@ -23,19 +23,19 @@
   <h1>Developing Data Products</h1>
   <hr>
 
-<h2>Course Project: <a href="https://vasupradkanade.github.io/DevelopingDataProducts_W3/UsingPlotly.html">Plot using Plotly</a></h2>
+<h2>Course Project: <a href="https://vasupradkanade.github.io/DevelopingDataProducts_W3/UsingPlotly.html">Slidyfy App and Presentation</a></h2>
 
 <p>Coursera Data Science Specialization</p>
 
-<p><small> <a href="github.com/VasupradKanade">Vasuprad Kanade</a> / <a href="https://www.linkedin.com/in/vasuprad">LinkedIn</a> </small></p>
+<p><small> <a href="https://github.com/VasupradKanade">Vasuprad Kanade</a> / <a href="https://www.linkedin.com/in/vasuprad">LinkedIn</a> </small></p>
 
 <p><center>
-<em>&quot;Turn sales information into insight through the magic of Shiny&quot;</em>
+<em>&quot;Plot IRIS flower data using ShinyApp and Slidify Presentation&quot;</em>
 </center></p>
 
 </section>
 <section class='' data-state='' id='slide-2'>
-  <h2>The Assignment</h2>
+  <h1>The Assignment</h1>
   <p>The goal of this assignment is to build:</p>
 
 <ol>
@@ -46,68 +46,39 @@
 <h3>Links to Project App &amp; Docs</h3>
 
 <ol>
-<li><p>Shiny App: <a href="https://vasupradkanade.shinyapps.io/Wk4ShinyApp/">Link</a></p></li>
+<li><p>Shiny App: <a href="https://vasupradkanade.shinyapps.io/ShinyAppIris/">Link</a></p></li>
 <li><p><code>server.R</code> and <code>ui.R</code> files: <a href="https://github.com/VasupradKanade/ShinyApp">Link</a> </p></li>
 </ol>
 
 </section>
 <section class='' data-state='' id='slide-3'>
-  <h2>The Sales Analytics Dashboard</h2>
-  <h4>Make Selections to Unlock Insights</h4>
+  <h1>The Data</h1>
+  <p>The Iris flower data set or Fisher&#39;s Iris data set is a multivariate data set introduced by the British statistician and biologist <em>Ronald Fisher</em> in his 1936 paper The use of multiple measurements in taxonomic problems as an example of linear discriminant analysis</p>
 
-<p>There&#39;s a lot you can do with the <strong>Sales Analytics Dashboard</strong>. Here&#39;s a few suggestion to get started:</p>
-
-<ul>
-<li><p>Imagine you are an executive at <em>Cannondale</em> in charge of strategy and business development. Your goal is to understand which products <em>Cannondale&#39;s</em> customers are purchasing, which customers are purchasing the most, and what the organization can do to improve sales.</p></li>
-<li><p>Use the <strong>Reactive Inputs</strong> to filter by year, product unit price, product primary category, and product secondary category. </p></li>
-<li><p>On the <strong>Analysis</strong> tab, see how the filters can be used to drill into the information. See if there are any insights that you can come up with from the data.</p></li>
-<li><p>Switch to the <strong>Data</strong> tab to see how the filters control the data. Subset the data, and try downloading the csv file. </p></li>
-<li><p>Use the <strong>Reset Fields</strong> button when finished. See how the data set refreshs to its original size and how all of the reactive inputs reset.</p></li>
-</ul>
+<p>The data set consists of 50 samples from each of three species of <em><strong>Iris</strong> (Iris setosa, Iris virginica and Iris versicolor)</em>. Four features were measured from each sample: the length and the width of the sepals and petals, in centimetres. Based on the combination of these four features, Fisher developed a linear discriminant model to distinguish the species from each other.</p>
 
 </section>
 <section class='' data-state='' id='slide-4'>
-  <h2>Code Example</h2>
-  <h4>Leaflet: Visualize Customers By Location</h4>
+  <h1>Code Example</h1>
+  <h4>Plot IRIS flower data using Plotly</h4>
 
-<pre><code class="r">library(leaflet)
-library(htmlwidgets)
-library(knitr)
-library(dplyr)
+<p>This segment of code selects the relevant data columns, aggregates the three speciees of Iris flower by petal and sepal length.</p>
 
-# Load data
-source(&quot;helper.R&quot;)
-orders.extended &lt;- read.data()
+<pre><code class="r">filename &lt;- &quot;iris.csv&quot;
 
-# Get sales by location
-salesByLocation &lt;- orders.extended %&gt;%
-        group_by(bikeshop.name, longitude, latitude) %&gt;%
-        summarise(total.sales = sum(price.extended)) %&gt;%
-        mutate(popup = paste0(bikeshop.name, 
-                              &quot;: &quot;, 
-                              scales::dollar(total.sales)))
+# Load the CSV file from the local directory
+dataset &lt;- read.csv(filename, header=FALSE)
 
-# Use Leaflet package to create map visualizing sales by customer location
-l &lt;- leaflet(salesByLocation) %&gt;% 
-  addProviderTiles(&quot;CartoDB.Positron&quot;) %&gt;%
-  addMarkers(lng = ~longitude, 
-             lat = ~latitude,
-             popup = ~popup) %&gt;%
-  addCircles(lng = ~longitude, 
-             lat = ~latitude, 
-             weight = 2,
-             radius = ~(total.sales)^0.775)
-
-# Move to img folder
-setwd(&quot;./assets/img&quot;)
-saveWidget(l, &#39;leaflet1.html&#39;) # Save widget html
-setwd(&quot;../..&quot;)
-
-# Source saved file
-cat(&#39;&lt;pre&gt;&lt;iframe src=&quot;./assets/img/leaflet1.html&quot; width=100% height=350px allowtransparency=&quot;true&quot;&gt; &lt;/iframe&gt;&lt;/pre&gt;&#39;)
+# Set the column names in the dataset
+colnames(dataset) &lt;- c(&quot;Sepal.Length&quot;,&quot;Sepal.Width&quot;,&quot;Petal.Length&quot;,&quot;Petal.Width&quot;,&quot;Species&quot;)
 </code></pre>
 
-<pre><iframe src="./assets/img/leaflet1.html" width=100% height=350px allowtransparency="true"> </iframe></pre>
+</section>
+<section class='' data-state='' id='slide-5'>
+  <h1>Plot using Plotly</h1>
+  <p>Using ColorBrewer Palette Names</p>
+
+<pre><iframe src="./assets/img/plot1.html" width=750px height=400px allowtransparency="true" scrolling="no" seamless="seamless" frameBorder="0"> </iframe></pre>
 
 </section>
     </div>
